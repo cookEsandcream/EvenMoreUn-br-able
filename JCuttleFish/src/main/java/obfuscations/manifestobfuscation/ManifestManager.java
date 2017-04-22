@@ -24,7 +24,7 @@ public class ManifestManager {
         String sourceCode = getSourceCodeFromFile(manifestFile);
 
         for(Map.Entry<String, String> entry : fileNameMappings.entrySet()){
-            String regex = "(<activity android:name=\".)("+entry.getKey()+")(\")";
+            String regex = "(.)("+entry.getKey()+")(\")";
             String replacement = "$1"+entry.getValue()+"$3";
             sourceCode = sourceCode.replaceAll(regex, replacement);
         }
