@@ -5,6 +5,7 @@ import extractor.filefilters.SuffixFolderFilter;
 import extractor.filefilters.enums.SuffixFilters;
 import obfuscations.filenameobfuscation.FilenameManager;
 import obfuscations.layoutobfuscation.LayoutManager;
+import obfuscations.manifestobfuscation.ManifestManager;
 import org.apache.commons.io.FileUtils;
 import parser.UnitSourceInitiator;
 import pojo.UnitNode;
@@ -14,17 +15,19 @@ import util.BackupFilesHelper;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
 
 
 //manages the different types of obfuscations and the order they will be applied.
 public class ObfuscationCoordinator
 {
 
-    public ObfuscationCoordinator ( String originalAbsolutePath, String backupAbsolutePath )
+    public ObfuscationCoordinator ( String originalAbsolutePath, String backupAbsolutePath, String manifestPath )
     {
         File originalLocation = new File( originalAbsolutePath );
         File backupLocation = new File( backupAbsolutePath );
-        BackupFilesHelper.backupFiles( originalLocation, backupLocation );
+        File manifestFile = new File(manifestPath);
+        BackupFilesHelper.backupFiles( originalLocation, backupLocation, manifestFile );
 
         Collection<File> originalFiles = this.getAbsolutePaths( originalLocation.getAbsolutePath() );
 
@@ -39,7 +42,25 @@ public class ObfuscationCoordinator
         FilenameManager filenameManager = new FilenameManager( originalLocation );
         filenameManager.obfuscate( unitNodes );
 
+        HashMap<String, String> fileNameMapping = createDummyData();
+
+        ManifestManager manifestManager = new ManifestManager(manifestFile, fileNameMapping);
+        manifestManager.obfuscate();
+
         this.saveUnitSourcesToFiles( unitSources );
+    }
+
+    private HashMap<String, String> createDummyData() {
+        HashMap<String, String> dummyData = new HashMap<>();
+
+        dummyData.put("DiaryEntry", "a");
+        dummyData.put("EditDiaryEntry", "e");
+        dummyData.put("EnterPasswordActivity", "f");
+        dummyData.put("LauncherActivity", "h");
+        dummyData.put("LoginActivity", "i");
+        dummyData.put("OverviewActivity", "j");
+
+        return dummyData;
     }
 
     private void saveUnitSourcesToFiles ( Collection<UnitSource> unitSources )

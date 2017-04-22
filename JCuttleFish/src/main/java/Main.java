@@ -9,10 +9,11 @@ public class Main
     {
         String originalLocationPath = args[ 0 ];
         String backupLocationPath = args[ 1 ];
+        String manifestPath = args[ 2 ];
 
         ConfigurationEnvironment.createConfigurationInstance( originalLocationPath );
 
-        new ObfuscationCoordinator( originalLocationPath, backupLocationPath );
+        new ObfuscationCoordinator( originalLocationPath, backupLocationPath, manifestPath );
     }
 
 }
