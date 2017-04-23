@@ -12,10 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Deque;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -24,23 +21,24 @@ public class FilenameManager
 
     private File pathToMain;
     private File rootPath;
+    public static HashMap<String, String> fileNameMapping = new HashMap<>();
 
     public FilenameManager ( File rootPath )
     {
         this.rootPath = rootPath;
     }
 
-    public Collection<UnitNode> obfuscate ( Collection<UnitNode> unitNodeCollection )
+    public Collection<UnitNode> obfuscate ( Collection<UnitNode> unitNodeCollection)
     {
         Collection<UnitNode> obfuscatedUnitNodeCollection;
-        obfuscatedUnitNodeCollection = this.obfuscateFilenames( unitNodeCollection );
+        obfuscatedUnitNodeCollection = this.obfuscateFilenames( unitNodeCollection);
 
 //        this.obfuscateFoldernames();
 
         return obfuscatedUnitNodeCollection;
     }
 
-    private Collection<UnitNode> obfuscateFilenames ( Collection<UnitNode> unitNodeCollection )
+    private Collection<UnitNode> obfuscateFilenames ( Collection<UnitNode> unitNodeCollection)
     {
         ObfuscatedNamesProvider obfuscatedNamesProvider = new ObfuscatedNamesProvider();
         Deque<String> obfuscatedNames = obfuscatedNamesProvider.getObfuscatedNames( ObfuscatedNamesVariations.ALPHABET );
@@ -54,7 +52,13 @@ public class FilenameManager
                                 .stream().map( m -> m.getName().getIdentifier() ).collect( Collectors.toList() );
                         if ( !methodsIdentifiers.contains( "main" ) )
                         {
-                            us.setFile( this.renameJavaFileTo( us.getFile(), obfuscatedNames.pollFirst() ) );
+                            //Store name and obfuscated name pairs into hashmap
+                            String obfuscatedFileName = obfuscatedNames.pollFirst();
+                            //Get file name and remove suffix '.java'
+                            String fileName = us.getFile().getName();
+                            fileName = fileName.substring(0, fileName.length()-5);
+                            fileNameMapping.put(fileName, obfuscatedFileName);
+                            us.setFile( this.renameJavaFileTo( us.getFile(), obfuscatedFileName) );
                         } else
                         {
                             this.pathToMain = us.getFile();
