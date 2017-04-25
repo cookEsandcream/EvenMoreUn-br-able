@@ -6,6 +6,7 @@ import extractor.filefilters.enums.SuffixFilters;
 import obfuscations.filenameobfuscation.FilenameManager;
 import obfuscations.layoutobfuscation.LayoutManager;
 import obfuscations.manifestobfuscation.ManifestManager;
+import obfuscations.xmlobfuscation.XMLManager;
 import org.apache.commons.io.FileUtils;
 import parser.UnitSourceInitiator;
 import pojo.UnitNode;
@@ -25,12 +26,13 @@ import static obfuscations.filenameobfuscation.FilenameManager.fileNameMapping;
 public class ObfuscationCoordinator
 {
 
-    public ObfuscationCoordinator ( String originalAbsolutePath, String backupAbsolutePath, String manifestPath )
+    public ObfuscationCoordinator ( String originalAbsolutePath, String backupAbsolutePath, String manifestPath, String xmlAbsolutePath )
     {
         File originalLocation = new File( originalAbsolutePath );
         File backupLocation = new File( backupAbsolutePath );
         File manifestFile = new File(manifestPath);
-        BackupFilesHelper.backupFiles( originalLocation, backupLocation, manifestFile );
+        File xmlLocation = new File( xmlAbsolutePath );
+        BackupFilesHelper.backupFiles( originalLocation, backupLocation, xmlLocation, manifestFile );
 
         Collection<File> originalFiles = this.getAbsolutePaths( originalLocation.getAbsolutePath() );
 
@@ -47,6 +49,10 @@ public class ObfuscationCoordinator
 
         ManifestManager manifestManager = new ManifestManager(manifestFile, fileNameMapping);
         manifestManager.obfuscate();
+
+        Collection<File> xmlFiles = this.getAbsolutePathsXML( xmlLocation.getAbsolutePath() );
+        XMLManager xmlManager = new XMLManager(xmlFiles, fileNameMapping);
+        xmlManager.obfuscate();
 
         this.saveUnitSourcesToFiles( unitSources );
     }
@@ -69,5 +75,11 @@ public class ObfuscationCoordinator
     {
         PathsExtractor pathsExtractor = new PathsExtractor( rootAbsolutePath );
         return pathsExtractor.getFilesInstances( new SuffixFolderFilter( SuffixFilters.JAVA ) );
+    }
+
+    private Collection<File> getAbsolutePathsXML ( String rootAbsolutePath )
+    {
+        PathsExtractor pathsExtractor = new PathsExtractor( rootAbsolutePath );
+        return pathsExtractor.getFilesInstances( new SuffixFolderFilter( SuffixFilters.XML ) );
     }
 }

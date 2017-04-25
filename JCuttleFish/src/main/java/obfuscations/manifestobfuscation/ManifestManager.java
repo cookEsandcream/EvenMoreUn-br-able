@@ -1,5 +1,6 @@
 package obfuscations.manifestobfuscation;
 
+import obfuscations.FileHelper;
 import org.apache.commons.io.FileUtils;
 import providers.FileSourceCodeProvider;
 
@@ -21,31 +22,14 @@ public class ManifestManager {
     }
 
     public void obfuscate() {
-        String sourceCode = getSourceCodeFromFile(manifestFile);
+        String sourceCode = FileHelper.getSourceCodeFromFile(manifestFile);
 
         for(Map.Entry<String, String> entry : fileNameMappings.entrySet()){
-            String regex = "(.)("+entry.getKey()+")(\")";
+            String regex = "([.])("+entry.getKey()+")(\")";
             String replacement = "$1"+entry.getValue()+"$3";
             sourceCode = sourceCode.replaceAll(regex, replacement);
         }
 
-        saveObfuscatedManifestFile(sourceCode);
-    }
-
-    private String getSourceCodeFromFile ( File file )
-    {
-        FileSourceCodeProvider fileSourceCodeProvider = new FileSourceCodeProvider();
-        return fileSourceCodeProvider.get( file );
-    }
-
-    private void saveObfuscatedManifestFile (String obfuscatedCode)
-    {
-        try
-        {
-            FileUtils.writeStringToFile( manifestFile, obfuscatedCode );
-        } catch ( IOException ioe )
-        {
-            ioe.printStackTrace();
-        }
+        FileHelper.saveObfuscatedManifestFile(manifestFile, sourceCode);
     }
 }

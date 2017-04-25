@@ -10,7 +10,7 @@ import java.io.IOException;
 public class BackupFilesHelper
 {
 
-    static public void backupFiles ( File sourceDir, File destDirBase, File manifest )
+    static public void backupFiles ( File sourceDir, File destDirBase, File xmlDir, File manifest )
     {
         try
         {
@@ -22,6 +22,7 @@ public class BackupFilesHelper
                 destinationDir.setWritable( true );
                 FileUtils.copyDirectory( sourceDir, destinationDir );
                 FileUtils.copyFileToDirectory(manifest, destinationDir);
+                FileUtils.copyDirectory( xmlDir, destinationDir );
             } else
             {
                 throw new RuntimeException( "Given backup directory does not exist." );
