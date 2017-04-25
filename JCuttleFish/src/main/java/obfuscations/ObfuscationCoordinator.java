@@ -16,8 +16,10 @@ import util.BackupFilesHelper;
 import java.io.File;
 import java.io.IOException;
 import java.net.FileNameMap;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 import static obfuscations.filenameobfuscation.FilenameManager.fileNameMapping;
 
@@ -50,8 +52,8 @@ public class ObfuscationCoordinator
         ManifestManager manifestManager = new ManifestManager(manifestFile, fileNameMapping);
         manifestManager.obfuscate();
 
-        Collection<File> xmlFiles = this.getAbsolutePathsXML( xmlLocation.getAbsolutePath() );
-        XMLManager xmlManager = new XMLManager(xmlFiles, fileNameMapping);
+        ArrayList<File> xmlFiles = (ArrayList) this.getAbsolutePathsXML( xmlLocation.getAbsolutePath() );
+        XMLManager xmlManager = new XMLManager(xmlFiles, xmlLocation, fileNameMapping);
         xmlManager.obfuscate();
 
         this.saveUnitSourcesToFiles( unitSources );
