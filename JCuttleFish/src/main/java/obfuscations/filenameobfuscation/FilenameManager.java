@@ -57,7 +57,7 @@ public class FilenameManager
                             //Get file name and remove suffix '.java'
                             String fileName = us.getFile().getName();
                             fileName = fileName.substring(0, fileName.length()-5);
-                            fileNameMapping.put(fileName, obfuscatedFileName);
+                            fileNameMapping.put(obfuscatedFileName, fileName);
                             us.setFile( this.renameJavaFileTo( us.getFile(), obfuscatedFileName) );
                         } else
                         {

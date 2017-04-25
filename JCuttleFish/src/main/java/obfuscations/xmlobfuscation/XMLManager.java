@@ -13,29 +13,38 @@ import java.util.*;
 public class XMLManager {
 
     private ArrayList<File> xmlLayoutFiles;
-    private File rootPath;
     private HashMap<String, String> javaFileNameMappings;
+    public static HashMap<String, String> xmlFileNameMapping = new HashMap<>();
 
-    public XMLManager(ArrayList<File> xmlLayoutFiles, File rootPath,  HashMap<String, String> javaFileNameMappings) {
+    public XMLManager(ArrayList<File> xmlLayoutFiles, HashMap<String, String> javaFileNameMappings) {
         this.xmlLayoutFiles = xmlLayoutFiles;
-        this.rootPath = rootPath;
         this.javaFileNameMappings = javaFileNameMappings;
     }
 
     public void obfuscate() {
 
+        //Obfuscate Filenames
         this.obfuscateFilenames();
 
         for (File xmlLayoutFile : xmlLayoutFiles) {
             String sourceCode = FileHelper.getSourceCodeFromFile(xmlLayoutFile);
 
+            //Update java file references
             for(Map.Entry<String, String> entry : javaFileNameMappings.entrySet()){
-                String regex = "([.])("+entry.getKey()+")(\")";
-                String replacement = "$1"+entry.getValue()+"$3";
+                String regex = "([.])("+entry.getValue()+")(\")";
+                String replacement = "$1"+entry.getKey()+"$3";
                 sourceCode = sourceCode.replaceAll(regex, replacement);
             }
 
-            FileHelper.saveObfuscatedManifestFile(xmlLayoutFile, sourceCode);
+            //Update xml id references
+            String fileName = xmlLayoutFile.getName();
+            fileName = fileName.substring(0, fileName.length()-4);
+
+            String regex = "(@[+]id/)("+xmlFileNameMapping.get(fileName)+")(\")";
+            String replacement = "$1"+fileName+"$3";
+            sourceCode = sourceCode.replaceAll(regex, replacement);
+
+            FileHelper.saveObfuscatedFile(xmlLayoutFile, sourceCode);
         }
     }
 
@@ -48,6 +57,10 @@ public class XMLManager {
 
         for (File xmlLayoutFile : xmlLayoutFiles) {
             String obfuscatedFileName = obfuscatedNames.pollFirst();
+            String fileName = xmlLayoutFile.getName();
+            fileName = fileName.substring(0, fileName.length()-4);
+            xmlFileNameMapping.put(obfuscatedFileName, fileName);
+
             File newFile = this.renameXMLFileTo( xmlLayoutFile, obfuscatedFileName);
 
             newXMLFiles.add(newFile);
