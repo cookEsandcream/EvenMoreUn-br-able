@@ -24,7 +24,7 @@ public class JavaManager {
 
             //Update java file references
             for(Map.Entry<String, String> entry : xmlFileNameMapping.entrySet()){
-                String regex = "(setContentView[(]R[.]layout[.])("+entry.getValue()+")([)])";
+                String regex = "(R[.]layout[.])("+entry.getValue()+")([),])";
                 String replacement = "$1"+entry.getKey()+"$3";
                 sourceCode = sourceCode.replaceAll(regex, replacement);
             }
