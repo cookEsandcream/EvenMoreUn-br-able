@@ -1,11 +1,13 @@
 package obfuscations.xmlobfuscation;
 
 import obfuscations.FileHelper;
+import providers.ObfuscatedNamesProvider;
+import util.enums.ObfuscatedNamesVariations;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class XMLStringManager {
 
@@ -37,5 +39,27 @@ public class XMLStringManager {
 
     public void obfuscateLayoutFiles() {
         
+    }
+
+    public void populateStringNameMappings(){
+
+            String sourceCode = FileHelper.getSourceCodeFromFile(stringFile);
+            String regex = "[\"].*[\"]";
+
+            ObfuscatedNamesProvider obfuscatedNamesProvider = new ObfuscatedNamesProvider();
+            //TODO: RePlace ALPHABET with .STRING_VARS
+            Deque<String> obfuscatedNames = obfuscatedNamesProvider.getObfuscatedNames( ObfuscatedNamesVariations.ALPHABET );
+
+            //Find all names in the file
+            List<String> allMatches = new ArrayList<String>();
+            Matcher m = Pattern.compile(regex).matcher(sourceCode);
+            while (m.find()) {
+                allMatches.add(m.group());
+            }
+
+            //Store obfuscated names in a map
+            for(String name : allMatches){
+                stringNameMappings.put(name, obfuscatedNames.pollFirst());
+            }
     }
 }
