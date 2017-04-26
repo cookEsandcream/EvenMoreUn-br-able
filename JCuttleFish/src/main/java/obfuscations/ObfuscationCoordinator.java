@@ -4,6 +4,7 @@ import extractor.PathsExtractor;
 import extractor.filefilters.SuffixFolderFilter;
 import extractor.filefilters.enums.SuffixFilters;
 import obfuscations.filenameobfuscation.FilenameManager;
+import obfuscations.layoutobfuscation.JavaManager;
 import obfuscations.layoutobfuscation.LayoutManager;
 import obfuscations.manifestobfuscation.ManifestManager;
 import obfuscations.xmlobfuscation.XMLManager;
@@ -16,10 +17,13 @@ import util.BackupFilesHelper;
 import java.io.File;
 import java.io.IOException;
 import java.net.FileNameMap;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 import static obfuscations.filenameobfuscation.FilenameManager.fileNameMapping;
+import static obfuscations.xmlobfuscation.XMLManager.xmlFileNameMapping;
 
 
 //manages the different types of obfuscations and the order they will be applied.
@@ -50,11 +54,15 @@ public class ObfuscationCoordinator
         ManifestManager manifestManager = new ManifestManager(manifestFile, fileNameMapping);
         manifestManager.obfuscate();
 
-        Collection<File> xmlFiles = this.getAbsolutePathsXML( xmlLocation.getAbsolutePath() );
+        this.saveUnitSourcesToFiles( unitSources );
+
+        ArrayList<File> xmlFiles = (ArrayList) this.getAbsolutePathsXML( xmlLocation.getAbsolutePath() );
         XMLManager xmlManager = new XMLManager(xmlFiles, fileNameMapping);
         xmlManager.obfuscate();
 
-        this.saveUnitSourcesToFiles( unitSources );
+        ArrayList<File> javaFiles = (ArrayList) this.getAbsolutePaths( originalLocation.getAbsolutePath() );
+        JavaManager javaManager = new JavaManager(javaFiles, xmlFileNameMapping);
+        javaManager.obfuscate();
     }
 
     private void saveUnitSourcesToFiles ( Collection<UnitSource> unitSources )

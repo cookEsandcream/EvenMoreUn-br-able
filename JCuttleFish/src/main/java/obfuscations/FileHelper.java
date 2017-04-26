@@ -14,7 +14,7 @@ public class FileHelper {
         return fileSourceCodeProvider.get( file );
     }
 
-    public static void saveObfuscatedManifestFile (File file, String obfuscatedCode)
+    public static void saveObfuscatedFile (File file, String obfuscatedCode)
     {
         try
         {
