@@ -28,8 +28,8 @@ public class XMLStringManager {
 
             //Update java file references
             for(Map.Entry<String, String> entry : stringNameMappings.entrySet()){
-                String regex = "(R[.]string[.])("+entry.getValue()+")([),])";
-                String replacement = "$1"+entry.getKey()+"$3";
+                String regex = "(R[.]string[.])("+entry.getKey()+")([),])";
+                String replacement = "$1"+entry.getValue()+"$3";
                 sourceCode = sourceCode.replaceAll(regex, replacement);
             }
 
@@ -38,7 +38,18 @@ public class XMLStringManager {
     }
 
     public void obfuscateLayoutFiles() {
-        
+        for (File file : layoutFiles) {
+            String sourceCode = FileHelper.getSourceCodeFromFile(file);
+
+            //Update java file references
+            for(Map.Entry<String, String> entry : stringNameMappings.entrySet()) {
+                String regex = "(@string[/])("+entry.getKey()+")(\")"; //assume this works
+                String replacement = "$1"+entry.getValue()+"$3";
+                sourceCode = sourceCode.replaceAll(regex, replacement);
+            }
+
+            FileHelper.saveObfuscatedFile(file, sourceCode);
+        }
     }
 
     public void populateStringNameMappings(){
