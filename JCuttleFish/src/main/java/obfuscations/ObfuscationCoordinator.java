@@ -30,12 +30,12 @@ import static obfuscations.xmlobfuscation.XMLManager.xmlFileNameMapping;
 public class ObfuscationCoordinator
 {
 
-    public ObfuscationCoordinator ( String originalAbsolutePath, String backupAbsolutePath, String manifestPath, String xmlAbsolutePath )
+    public ObfuscationCoordinator ( String originalAbsolutePath, String backupAbsolutePath, String mainPath )
     {
         File originalLocation = new File( originalAbsolutePath );
         File backupLocation = new File( backupAbsolutePath );
-        File manifestFile = new File(manifestPath);
-        File xmlLocation = new File( xmlAbsolutePath );
+        File manifestFile = new File(mainPath+"\\AndroidManifest.xml");
+        File xmlLocation = new File( mainpath+"\\res\\layout" );
         BackupFilesHelper.backupFiles( originalLocation, backupLocation, xmlLocation, manifestFile );
 
         Collection<File> originalFiles = this.getAbsolutePaths( originalLocation.getAbsolutePath() );
