@@ -8,6 +8,7 @@ import obfuscations.layoutobfuscation.JavaManager;
 import obfuscations.layoutobfuscation.LayoutManager;
 import obfuscations.manifestobfuscation.ManifestManager;
 import obfuscations.xmlobfuscation.XMLManager;
+import obfuscations.xmlobfuscation.XMLStringManager;
 import org.apache.commons.io.FileUtils;
 import parser.UnitSourceInitiator;
 import pojo.UnitNode;
@@ -30,14 +31,13 @@ import static obfuscations.xmlobfuscation.XMLManager.xmlFileNameMapping;
 public class ObfuscationCoordinator
 {
 
-    public ObfuscationCoordinator ( String originalAbsolutePath, String backupAbsolutePath, String manifestPath, String xmlAbsolutePath )
+    public ObfuscationCoordinator ( String originalAbsolutePath, String backupAbsolutePath, String mainPath )
     {
         File originalLocation = new File( originalAbsolutePath );
         File backupLocation = new File( backupAbsolutePath );
-        File manifestFile = new File(manifestPath);
-        File xmlLocation = new File( xmlAbsolutePath );
+        File manifestFile = new File(mainPath+"\\AndroidManifest.xml");
+        File xmlLocation = new File( mainPath+"\\res\\layout" );
         BackupFilesHelper.backupFiles( originalLocation, backupLocation, xmlLocation, manifestFile );
-
         Collection<File> originalFiles = this.getAbsolutePaths( originalLocation.getAbsolutePath() );
 
         UnitSourceInitiator initiator = new UnitSourceInitiator();
