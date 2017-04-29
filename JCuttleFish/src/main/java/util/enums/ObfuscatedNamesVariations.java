@@ -6,5 +6,6 @@ public enum ObfuscatedNamesVariations
     METHOD_PARAMETERS,
     METHOD_LOCAL_VARS,
     INTERFACE_METHODS,
-    SUBCLASS_METHODS
+    SUBCLASS_METHODS,
+    STRING_VARS
 }
