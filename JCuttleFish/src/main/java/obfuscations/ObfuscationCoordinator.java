@@ -37,6 +37,7 @@ public class ObfuscationCoordinator
         File backupLocation = new File( backupAbsolutePath );
         File manifestFile = new File(mainPath+"\\AndroidManifest.xml");
         File xmlLocation = new File( mainPath+"\\res\\layout" );
+        File xmlStrings = new File( mainPath+"\\res\\values\\strings.xml");
         BackupFilesHelper.backupFiles( originalLocation, backupLocation, xmlLocation, manifestFile );
         Collection<File> originalFiles = this.getAbsolutePaths( originalLocation.getAbsolutePath() );
 
@@ -63,6 +64,11 @@ public class ObfuscationCoordinator
         ArrayList<File> javaFiles = (ArrayList) this.getAbsolutePaths( originalLocation.getAbsolutePath() );
         JavaManager javaManager = new JavaManager(javaFiles, xmlFileNameMapping);
         javaManager.obfuscate();
+
+        XMLStringManager xmlStringManager = new XMLStringManager(xmlStrings, (ArrayList) this.getAbsolutePaths(originalLocation.getAbsolutePath()), (ArrayList) this.getAbsolutePathsXML(xmlLocation.getAbsolutePath()));
+        xmlStringManager.populateStringNameMappings();
+        xmlStringManager.obfuscateJavaFiles();
+        xmlStringManager.obfuscateLayoutFiles();
     }
 
     private void saveUnitSourcesToFiles ( Collection<UnitSource> unitSources )

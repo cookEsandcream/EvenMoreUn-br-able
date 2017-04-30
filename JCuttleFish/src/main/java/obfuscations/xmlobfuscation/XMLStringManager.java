@@ -53,27 +53,26 @@ public class XMLStringManager {
     }
 
     public void populateStringNameMappings(){
+        String sourceCode = FileHelper.getSourceCodeFromFile(stringFile);
+        String regex = "[\"].*[\"]";
 
-            String sourceCode = FileHelper.getSourceCodeFromFile(stringFile);
-            String regex = "[\"].*[\"]";
+        ObfuscatedNamesProvider obfuscatedNamesProvider = new ObfuscatedNamesProvider();
+        //TODO: RePlace ALPHABET with .STRING_VARS
+        Deque<String> obfuscatedNames = obfuscatedNamesProvider.getObfuscatedNames( ObfuscatedNamesVariations.ALPHABET );
 
-            ObfuscatedNamesProvider obfuscatedNamesProvider = new ObfuscatedNamesProvider();
-            //TODO: RePlace ALPHABET with .STRING_VARS
-            Deque<String> obfuscatedNames = obfuscatedNamesProvider.getObfuscatedNames( ObfuscatedNamesVariations.ALPHABET );
+        //Find all names in the file
+        List<String> allMatches = new ArrayList<String>();
+        Matcher m = Pattern.compile(regex).matcher(sourceCode);
+        while (m.find()) {
+            allMatches.add(m.group());
+        }
 
-            //Find all names in the file
-            List<String> allMatches = new ArrayList<String>();
-            Matcher m = Pattern.compile(regex).matcher(sourceCode);
-            while (m.find()) {
-                allMatches.add(m.group());
-            }
-
-            //Store obfuscated names in a map
-            for(String name : allMatches){
-                String obfuscatedName = obfuscatedNames.pollFirst();
-                stringNameMappings.put(name, obfuscatedName);
-                sourceCode = sourceCode.replace(name, obfuscatedName);
-            }
+        //Store obfuscated names in a map
+        for(String name : allMatches){
+            String obfuscatedName = obfuscatedNames.pollFirst();
+            stringNameMappings.put(name, obfuscatedName);
+            sourceCode = sourceCode.replace(name, obfuscatedName);
+        }
 
         FileHelper.saveObfuscatedFile(stringFile, sourceCode);
     }
