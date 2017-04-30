@@ -24,6 +24,11 @@ public class ManifestManager {
             sourceCode = sourceCode.replaceAll(regex, replacement);
         }
 
+        //Remove XML Comments
+        String regex = "(<!--)(.*)(-->)";
+        String replacement = "";
+        sourceCode = sourceCode.replaceAll(regex, replacement);
+
         FileHelper.saveObfuscatedFile(manifestFile, sourceCode);
     }
 }
