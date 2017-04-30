@@ -25,12 +25,12 @@ public class ObfuscatedNamesProvider
     {
         Stream<String> variableNamesStream = Stream.empty();
 
-        String[] alphabet = {"kj23g6g2dh7h6gjh5k62ghf688", "dg5f36j5hd6dg7554jkg346dg7f", "dg5f36jShd6dg7554jkg346dg7f",
+        String[] alphabet = {"kj23g6g2dh7h6gjh5k62ghf688", "dg5f36j5hd6dg7554jkg346dg7f", "dg5f36jshd6dg7554jkg346dg7f",
                 "k2g256g73kj526fg7df7h4jjkj24", "kjhg5fd67456k63g567f465hkl5k", "k2g256g73kj526fg7df7h4jjkj24",
-                "dg5f36j5hd6dg75S4jkg346dg7f", "gadsfhsgkjhjdkhgfedshdfk", "f465hkl5k31k2g256g73kj526f",
-                "g5f36j5hd6dg7554jkg346dg7f3", "k2g256g73kj526fg7df7hAintj24", "Ikhdsgfajdkfkag1fkjahasdg",
+                "dg5f36j5hd6dg75s4jkg346dg7f", "gadsfhsgkjhjdkhgfedshdfk", "f465hkl5k31k2g256g73kj526f",
+                "g5f36j5hd6dg7554jkg346dg7f3", "k2g256g73kj526fg7df7haintj24", "ikhdsgfajdkfkag1fkjahasdg",
                 "dg7554jkg346dg7f3dg5f36j5hd6dg7554j", "gadsfhsgkjhjdkbgfedshdfk", "jhg5fd67456k63g567f465hkl5ksh",
-                "dg5f36j5hd6dg75SAjkg3A6dg7f" };
+                "dg5f36j5hd6dg75sajkg3a6dg7f" };
         //Collections.shuffle(Arrays.asList(alphabet));
 
         String[] method_parameters = {"onXMLCreate", "gadsfhsgkjhjdkhgfadshdfk", "getStringAs", "lkhdsgfajdkfkaglfkjahasdg",
