@@ -58,7 +58,7 @@ public class XMLStringManager {
 
         ObfuscatedNamesProvider obfuscatedNamesProvider = new ObfuscatedNamesProvider();
         //TODO: RePlace ALPHABET with .STRING_VARS
-        Deque<String> obfuscatedNames = obfuscatedNamesProvider.getObfuscatedNames( ObfuscatedNamesVariations.ALPHABET );
+        Deque<String> obfuscatedNames = obfuscatedNamesProvider.getObfuscatedNames( ObfuscatedNamesVariations.STRING_VARS );
 
         //Find all names in the file
         List<String> allMatches = new ArrayList<String>();
@@ -70,8 +70,9 @@ public class XMLStringManager {
         //Store obfuscated names in a map
         for(String name : allMatches){
             String obfuscatedName = obfuscatedNames.pollFirst();
-            stringNameMappings.put(name, obfuscatedName);
-            sourceCode = sourceCode.replace(name, obfuscatedName);
+            String nameWithoutQuotes = name.substring(1,name.length()-2);
+            stringNameMappings.put(nameWithoutQuotes, obfuscatedName);
+            sourceCode = sourceCode.replace(nameWithoutQuotes, obfuscatedName);
         }
 
         FileHelper.saveObfuscatedFile(stringFile, sourceCode);
