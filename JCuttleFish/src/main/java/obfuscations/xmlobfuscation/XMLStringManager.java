@@ -74,5 +74,7 @@ public class XMLStringManager {
                 stringNameMappings.put(name, obfuscatedName);
                 sourceCode = sourceCode.replace(name, obfuscatedName);
             }
+
+        FileHelper.saveObfuscatedFile(stringFile, sourceCode);
     }
 }
