@@ -29,6 +29,15 @@ public class JavaManager {
                 sourceCode = sourceCode.replaceAll(regex, replacement);
             }
 
+            //Remove Java Comments
+            String regex = "(//)(.*)(\\r\\n|[\\r\\n])";
+            String replacement = "$3";
+            sourceCode = sourceCode.replaceAll(regex, replacement);
+
+            regex = "(/[*])(.*)([*]/)";
+            replacement = "";
+            sourceCode = sourceCode.replaceAll(regex, replacement);
+
             FileHelper.saveObfuscatedFile(file, sourceCode);
         }
     }
