@@ -70,7 +70,9 @@ public class XMLStringManager {
 
             //Store obfuscated names in a map
             for(String name : allMatches){
-                stringNameMappings.put(name, obfuscatedNames.pollFirst());
+                String obfuscatedName = obfuscatedNames.pollFirst();
+                stringNameMappings.put(name, obfuscatedName);
+                sourceCode = sourceCode.replace(name, obfuscatedName);
             }
     }
 }
