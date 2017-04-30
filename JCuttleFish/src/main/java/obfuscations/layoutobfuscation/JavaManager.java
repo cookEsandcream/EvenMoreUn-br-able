@@ -11,10 +11,12 @@ public class JavaManager {
 
     private ArrayList<File> javaFiles;
     private HashMap<String, String> xmlFileNameMapping;
+    private HashMap<String, String> fileNameMapping;
 
-    public JavaManager(ArrayList<File> javaFiles, HashMap<String, String> xmlFileNameMapping) {
+    public JavaManager(ArrayList<File> javaFiles, HashMap<String, String> xmlFileNameMapping, HashMap<String, String> fileNameMapping) {
         this.javaFiles = javaFiles;
         this.xmlFileNameMapping = xmlFileNameMapping;
+        this.fileNameMapping = fileNameMapping;
     }
 
     public void obfuscate() {
@@ -22,9 +24,16 @@ public class JavaManager {
         for (File file : javaFiles) {
             String sourceCode = FileHelper.getSourceCodeFromFile(file);
 
-            //Update java file references
+            //Update xml file references
             for(Map.Entry<String, String> entry : xmlFileNameMapping.entrySet()){
                 String regex = "(R[.]layout[.])("+entry.getValue()+")([),])";
+                String replacement = "$1"+entry.getKey()+"$3";
+                sourceCode = sourceCode.replaceAll(regex, replacement);
+            }
+
+            //Update java file references
+            for(Map.Entry<String, String> entry : fileNameMapping.entrySet()){
+                String regex = "([(,\\s{])("+entry.getValue()+")([.])";
                 String replacement = "$1"+entry.getKey()+"$3";
                 sourceCode = sourceCode.replaceAll(regex, replacement);
             }
