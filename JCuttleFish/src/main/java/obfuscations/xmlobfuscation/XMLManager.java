@@ -44,6 +44,11 @@ public class XMLManager {
             String replacement = "$1"+fileName+"$3";
             sourceCode = sourceCode.replaceAll(regex, replacement);
 
+            //Remove XML Comments
+            regex = "(<!--)(.*)(-->)";
+            replacement = "";
+            sourceCode = sourceCode.replaceAll(regex, replacement);
+
             FileHelper.saveObfuscatedFile(xmlLayoutFile, sourceCode);
         }
     }
