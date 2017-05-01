@@ -40,6 +40,13 @@ public class Condenser {
         sourceCode = sourceCode.replaceAll("\r", "");
         sourceCode = sourceCode.replaceAll("\t", "");
         sourceCode = sourceCode.replaceAll("\n", "");
+        sourceCode = sourceCode.replaceAll(" +", " ");
+        sourceCode = sourceCode.replaceAll(" \\{", "{");
+        sourceCode = sourceCode.replaceAll("\\{ ", "{");
+        sourceCode = sourceCode.replaceAll(" }", "}");
+        sourceCode = sourceCode.replaceAll("} ", "}");
+        sourceCode = sourceCode.replaceAll(" ;", ";");
+        sourceCode = sourceCode.replaceAll("; ", ";");
 
         FileHelper.saveObfuscatedFile(file, sourceCode);
     }
