@@ -77,13 +77,13 @@ public class ObfuscatedNamesProvider
                 "kl4lkj5ljkh6g7f7g6d8d9s97lkkljhku5gf", "kjdsfjklfnjiuvnkoo4eije8dkjvu8o", "jklvueo84ioe4o9efklliueflegleiful4wi9"};
         Collections.shuffle(Arrays.asList(interface_methods));
 
-        String[] string_vars = {"string526fg7df7hAjjkj24", "MySecretSecrets", "g5f36j5hd6dg7554jkg346dg7fd", "setStateActive", "$",
+        String[] string_vars = {"string526fg7df7hAjjkj24", "MySecretSecrets", "g5f36j5hd6dg7554jkg346dg7fd", "setStateActive", "ffffff",
                 "g5f36j5hdbdg7554jkg346dg7f3dg5f36j5hd6dg7554jkg346dg7fgdsfhsgkjhjdkhgfedshdfk", "setImageURI", "android", "returnIntent",
                 "lkhdsgfajdkfkaglfkjahasdglkhdsgfajdkfkaglfkjahasdg", "klh4gS6hdjkhghddddffggj45j6jk76h7ffjh5gf8fg78gh7kkkjgf6fdhjlhkhgf6fgh",
-                "g5f36j5hd6dg7554jkg346dg7f3dg5f36j5hd6dg75$4jkg346dg7fgadsfhsgkjhjdkhgfedshdfk",
+                "g5f36j5hd6dg7554jkg346dg7f3dg5f36j5hd6dg754jkg346dg7fgadsfhsgkjhjdkhgfedshdfk",
                 "kj4jhgffdd8ds9sdghj3ks4kv4hj5hgjk4kj54h6hju7f8gd9d9", "ifekjje9u8ji4uiyucghc56y4ucc4ou894ujcu8jucjjkuevuiouciwckhrik",
                 "stringPlaceholderMessage", "wse894jes89eoxjwo9flelfu8iegvI8iesyhwolopwqpyoqf", "wse89Ajes89eozjwo9flelfu8iegvI8iesyhwolopwqpyoqf",
-                "kl5jk6hgf67dd9d09f6gh7hj4hj434j1k3k5gjgf67d", "$$$$$$$$$$$$$$$$$$$$$",
+                "kl5jk6hgf67dd9d09f6gh7hj4hj434j1k3k5gjgf67d", "ssssssssssssssssssssssssssssss",
                 "g5f36j5hdbdg7554jkg346dg7f3dg5f36j5hd6dg7554jkj346dg7fgdsfhsgkjhjdkhgfedshdfk", "setDate",
                 "Osdsfd90doidf9d89d9feo9dfodofdf91lk1li3iug4d", "Osdsfd9Odoidf9d89d9feo9dfodofdf91lk1li3iug4d"};
         //Collections.shuffle(Arrays.asList(string_vars));

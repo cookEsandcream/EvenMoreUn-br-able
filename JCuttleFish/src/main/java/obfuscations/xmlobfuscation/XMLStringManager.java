@@ -43,7 +43,7 @@ public class XMLStringManager {
 
             //Update java file references
             for(Map.Entry<String, String> entry : stringNameMappings.entrySet()) {
-                String regex = "(@string[/])("+entry.getKey()+")(\")"; //assume this works
+                String regex = "(\"@string[/])("+entry.getKey()+")(\")";
                 String replacement = "$1"+entry.getValue()+"$3";
                 sourceCode = sourceCode.replaceAll(regex, replacement);
             }
@@ -57,7 +57,6 @@ public class XMLStringManager {
         String regex = "[\"].*[\"]";
 
         ObfuscatedNamesProvider obfuscatedNamesProvider = new ObfuscatedNamesProvider();
-        //TODO: RePlace ALPHABET with .STRING_VARS
         Deque<String> obfuscatedNames = obfuscatedNamesProvider.getObfuscatedNames( ObfuscatedNamesVariations.STRING_VARS );
 
         //Find all names in the file
@@ -70,7 +69,7 @@ public class XMLStringManager {
         //Store obfuscated names in a map
         for(String name : allMatches){
             String obfuscatedName = obfuscatedNames.pollFirst();
-            String nameWithoutQuotes = name.substring(1,name.length()-2);
+            String nameWithoutQuotes = name.substring(1,name.length()-1);
             stringNameMappings.put(nameWithoutQuotes, obfuscatedName);
             sourceCode = sourceCode.replace(nameWithoutQuotes, obfuscatedName);
         }
