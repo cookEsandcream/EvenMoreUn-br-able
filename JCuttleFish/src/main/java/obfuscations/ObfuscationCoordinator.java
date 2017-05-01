@@ -65,7 +65,9 @@ public class ObfuscationCoordinator
         JavaManager javaManager = new JavaManager(javaFiles, xmlFileNameMapping, fileNameMapping);
         javaManager.obfuscate();
 
-        XMLStringManager xmlStringManager = new XMLStringManager(xmlStrings, (ArrayList) this.getAbsolutePaths(originalLocation.getAbsolutePath()), (ArrayList) this.getAbsolutePathsXML(xmlLocation.getAbsolutePath()));
+        ArrayList<File> layoutFiles = (ArrayList) this.getAbsolutePathsXML(xmlLocation.getAbsolutePath());
+        layoutFiles.add(manifestFile);
+        XMLStringManager xmlStringManager = new XMLStringManager(xmlStrings, (ArrayList) this.getAbsolutePaths(originalLocation.getAbsolutePath()), layoutFiles);
         xmlStringManager.populateStringNameMappings();
         xmlStringManager.obfuscateJavaFiles();
         xmlStringManager.obfuscateLayoutFiles();
