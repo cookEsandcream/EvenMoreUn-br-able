@@ -28,7 +28,7 @@ public class XMLStringManager {
 
             //Update java file references
             for(Map.Entry<String, String> entry : stringNameMappings.entrySet()){
-                String regex = "(R[.]string[.])("+entry.getKey()+")([),])";
+                String regex = "(R[.]string[.])("+entry.getKey()+")([),:])";
                 String replacement = "$1"+entry.getValue()+"$3";
                 sourceCode = sourceCode.replaceAll(regex, replacement);
             }
